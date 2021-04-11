@@ -1,8 +1,12 @@
-a{
-    text-decoration: none;
-    padding: .2em;
+body {
+    font-family: sans-serif;
 }
 
-a:hover{
-    background-color: orange;
+a {
+    text-decoration: none;
+    padding: .5em;
+}
+
+a:hover {
+    background-color: cornflowerblue;
 }
