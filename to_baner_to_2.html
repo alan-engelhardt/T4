@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>testspil</title>
+    <style>
+        #spil {
+            position: relative;
+            font-family: sans-serif;
+            position: relative;
+            width: 95vw;
+            height: 50vw;
+            border: solid 1px black;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #container1,
+        #container2,
+        #containerHero {
+            position: absolute;
+            top: -5vw;
+            opacity: 0;
+        }
+
+        #container2 {
+            animation-delay: .8s;
+        }
+
+        #containerHero {
+            top: 38vw;
+            opacity: 1;
+        }
+
+        #sprite1,
+        #sprite2,
+        #spriteHero {
+            width: 5vw;
+            height: 10vw;
+            background-color: orange;
+        }
+
+        #sprite2 {
+            background-color: yellowgreen;
+        }
+
+        #spriteHero {
+            background-color: cornflowerblue;
+        }
+
+        .fremad {
+            animation: fremad_kf 1.6s linear infinite forwards;
+        }
+
+        .pause {
+            animation-play-state: paused;
+        }
+
+        @keyframes fremad_kf {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) scale(.5);
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            25% {
+                transform: translate(4vw, 11vw) scale(.7);
+            }
+
+            50% {
+                transform: translate(-4vw, 22vw) scale(.75);
+            }
+
+            95% {
+                opacity: 1;
+                transform: translate(2vw, 40vw) scale(.9);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(0, 45vw) scale(1);
+            }
+        }
+
+        .forsvind {
+            display: none;
+        }
+
+        .yahu {
+            animation: yahu_kf .2s infinite alternate;
+        }
+
+
+        @keyframes yahu_kf {
+            to {
+                background-color: yellow;
+            }
+        }
+
+        #bane1,
+        #bane2 {
+            position: absolute;
+            width: 15vw;
+            height: 45vw;
+            padding: 3px;
+            left: 20vw;
+            background-color: beige;
+        }
+
+        #bane2 {
+            left: 60vw;
+        }
+
+        .bane1 {
+            left: 25vw;
+        }
+
+        .bane2 {
+            left: 65vw;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="spil">
+        <p>Point: <span id="pointdisp"></span> | Liv: <span id="livdisp"></span></p>
+        <div id="tiddisp" class="tidned"></div>
+        <div id="bane1"></div>
+        <div id="bane2"></div>
+        <div id="container1">
+            <div id="sprite1"></div>
+        </div>
+        <div id="container2">
+            <div id="sprite2"></div>
+        </div>
+        <div id="containerHero">
+            <div id="spriteHero"></div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener("load", loaded);
+
+        let point, liv;
+
+        function loaded() {
+            point = 0;
+            liv = 10;
+            pointdisp.textContent = point;
+            livdisp.textContent = liv;
+
+            container1.classList.add("fremad");
+            const ran1 = Math.round((Math.random() + 1));
+            container1.classList.add("bane" + ran1);
+
+            container2.classList.add("fremad");
+            const ran2 = Math.round((Math.random() + 1));
+            container2.classList.add("bane" + ran2);
+
+            containerHero.classList.add("bane1");
+            container1.addEventListener("animationiteration", ibund);
+            container2.addEventListener("animationiteration", ibund);
+            bane1.addEventListener("click", hop);
+            bane2.addEventListener("click", hop);
+            spil.style.backgroundColor = "white";
+        }
+
+        function hop() {
+            containerHero.classList = this.id;
+        }
+
+        function ibund() {
+            console.log(this)
+            if (this.classList[1] == containerHero.classList[0]) {
+                liv--
+                livdisp.textContent = liv;
+                if (liv <= 0) {
+                    console.log("0 liv");
+                    spil.style.backgroundColor = "red";
+                    container1.classList.remove("fremad");
+                    sprite1.classList.add("forsvind");
+                    container2.classList.remove("fremad");
+                    sprite2.classList.add("forsvind");
+                }
+            } else {
+                point++
+                pointdisp.textContent = point;
+                if (point >= 20) {
+                    console.log("VUNDET");
+                    spil.style.backgroundColor = "GreenYellow";
+                    container1.classList.remove("fremad");
+                    sprite1.classList.add("forsvind");
+                    container2.classList.remove("fremad");
+                    sprite2.classList.add("forsvind");
+                    spriteHero.classList.add("yahu");
+                } else {
+                    this.classList = "fremad";
+                    this.offsetHeight;
+                    const ran1 = Math.round((Math.random() + 1));
+                    this.classList.add("bane" + ran1);
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>
